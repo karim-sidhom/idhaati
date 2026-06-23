@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إذاعتي</title>
     <meta name="theme-color" content="#060d3a">
+    <meta name="description" content="إذاعتي — LORD RADIO STATION · 24/24 · موسيقى · كليبات · إبداع">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="إذاعتي">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect fill='%23020b2e' width='180' height='180'/%3E%3Ccircle cx='90' cy='90' r='55' fill='%23ffd700'/%3E%3Cpath d='M90 45 L102 72 L132 76 L110 97 L117 127 L90 108 L63 127 L70 97 L48 76 L78 72 Z' fill='%230d1a6e'/%3E%3C/svg%3E">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23020b2e' width='100' height='100'/%3E%3Ccircle cx='50' cy='50' r='35' fill='%23ffd700'/%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
     <style>
@@ -123,9 +130,7 @@
         .item-type{font-size:10px;color:var(--text-dim);margin-top:1px;}
         .item-dur{font-size:10px;color:var(--text-dim);}
 
-        /* ADD */
-        .add-btn{width:100%;padding:12px;background:linear-gradient(135deg,var(--gold-deep),var(--gold));color:var(--royal-deep);border:none;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;-webkit-tap-highlight-color:transparent;}
-        .add-btn:hover{box-shadow:0 0 18px rgba(255,215,0,0.4);transform:translateY(-1px);}
+        /* ADD — DISABLED */
 
         /* FOOTER */
         .footer{text-align:center;font-size:10px;color:var(--text-dim);margin-top:20px;position:relative;z-index:2;}
@@ -261,7 +266,7 @@
                 <div class="radio-dial">
                     <div class="dial-screen">
                         <div class="dial-freq">FM · إذاعتي</div>
-                        <div class="player-title" id="player-title">جارٍ التشغيل...</div>
+                        <div class="player-title" id="player-title">🔴 على الهواء مباشرة</div>
                         <div class="dial-station">LORD RADIO STATION · 24/24</div>
                         <div class="dial-needle"></div>
                     </div>
@@ -279,13 +284,13 @@
                     <span id="time-tot">0:00</span>
                 </div>
 
-                <!-- Boutons -->
+                <!-- Boutons — VISIBLE BUT DISABLED -->
                 <div class="controls">
-                    <button class="ctrl-btn" onclick="prevTrack()">⏮</button>
-                    <button class="ctrl-btn" id="btn-shuffle" onclick="toggleShuffle()" title="عشوائي">🔀</button>
+                    <button class="ctrl-btn" disabled>⏮</button>
+                    <button class="ctrl-btn" id="btn-shuffle" disabled>🔀</button>
                     <button class="ctrl-btn play-main" onclick="togglePlay()" id="btn-play">▶</button>
-                    <button class="ctrl-btn" id="btn-repeat" onclick="toggleRepeat()" title="تكرار">🔁</button>
-                    <button class="ctrl-btn" onclick="nextTrack()">⏭</button>
+                    <button class="ctrl-btn" id="btn-repeat" disabled>🔁</button>
+                    <button class="ctrl-btn" disabled>⏭</button>
                 </div>
 
                 <!-- Volume -->
@@ -308,39 +313,44 @@
 
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script>
+// ── SERVICE WORKER DISABLED ──
+// if('serviceWorker' in navigator){
+//     navigator.serviceWorker.register('./sw.js').catch(function(err){
+//         console.log('SW registration failed:',err);
+//     });
+// }
+
 var playlist=[],currentIdx=-1,isPlaying=false,shuffle=false,repeat=false;
 var audio=document.getElementById('audio-player');
 var video=document.getElementById('video-player');
 
 // ── Playlist fixe de l'éclat (إذاعتي) ──
 var RADIO_TRACKS = [
-    {name:'نور', url:'نور (3).mp3', isVideo:false, duration:'--:--'},
-    {name:'يا من ظننت الهوى وعدًا يدوم', url:'يا من ظننت الهوى وعدًا يدوم (2).mp3', isVideo:false, duration:'--:--'},
-    {name:'Quarter In The Dryer', url:'Quarter In The Dryer (7).mp3', isVideo:false, duration:'--:--'},
-    {name:'Quarter In The Dryer II', url:'Quarter In The Dryer (9).mp3', isVideo:false, duration:'--:--'},
-    {name:'Quarter In The Dryer — Remix', url:'Quarter In The Dryer (Remix) (2).mp3', isVideo:false, duration:'--:--'},
-    {name:'Quarter In The Dryer — Remix II', url:'Quarter In The Dryer (Remix) (3).mp3', isVideo:false, duration:'--:--'},
+    {name:'نور', url:'https://raw.githubusercontent.com/karim-sidhom/idhaati/main/نور%20(3).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا من ظننت الهوى وعدًا يدوم', url:'https://raw.githubusercontent.com/karim-sidhom/idhaati/main/يا%20من%20ظننت%20الهوى%20وعدًا%20يدوم%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'Quarter In The Dryer', url:'https://raw.githubusercontent.com/karim-sidhom/idhaati/main/Quarter%20In%20The%20Dryer%20(7).mp3', isVideo:false, duration:'--:--'},
+    {name:'Quarter In The Dryer II', url:'https://raw.githubusercontent.com/karim-sidhom/idhaati/main/Quarter%20In%20The%20Dryer%20(9).mp3', isVideo:false, duration:'--:--'},
+    {name:'Quarter In The Dryer — Remix', url:'https://raw.githubusercontent.com/karim-sidhom/idhaati/main/Quarter%20In%20The%20Dryer%20(Remix)%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'Quarter In The Dryer — Remix II', url:'https://raw.githubusercontent.com/karim-sidhom/idhaati/main/Quarter%20In%20The%20Dryer%20(Remix)%20(3).mp3', isVideo:false, duration:'--:--'},
 ];
 window.addEventListener('load', function(){
     playlist = RADIO_TRACKS.slice();
     loadTrack(0);
 });
 
+// Autoplay après premier clic
+document.addEventListener('click', function autoplayOnce(){
+    if(playlist.length && !isPlaying){
+        playMedia();
+        document.removeEventListener('click', autoplayOnce);
+    }
+}, {once:true});
+
 function showNotif(msg,ok){
     Toastify({text:msg,duration:2500,gravity:'top',position:'center',style:{background:ok?'linear-gradient(135deg,#b8730a,#ffd700)':'linear-gradient(135deg,#8b0000,#e8445a)',color:ok?'#020b2e':'#fff',borderRadius:'8px',fontFamily:'Tajawal',fontSize:'13px'}}).showToast();
 }
 
-function addFiles(input){
-    Array.from(input.files).forEach(function(file){
-        var url=URL.createObjectURL(file);
-        var isVid=file.type.startsWith('video/');
-        playlist.push({name:file.name.replace(/\.[^.]+$/,''),url:url,isVideo:isVid,duration:'--:--'});
-    });
-    renderPlaylist();
-    if(currentIdx===-1&&playlist.length)loadTrack(0);
-    input.value='';
-    showNotif('✓ تمت الإضافة',true);
-}
+// Upload disabled — fixed playlist only
 
 function renderPlaylist(){ /* playlist masquée — radio publique */ }
 
@@ -348,8 +358,6 @@ function loadTrack(idx){
     if(idx<0||idx>=playlist.length)return;
     currentIdx=idx;
     var t=playlist[idx];
-    var titleEl=document.getElementById('player-title');
-    if(titleEl)titleEl.textContent=t.name;
     audio.pause();video.pause();
     video.style.display='none';
     document.getElementById('progress-fill').style.width='0%';
@@ -428,7 +436,10 @@ function toggleRepeat(){
     document.getElementById('btn-repeat').classList.toggle('active',repeat);
 }
 
-function setVolume(v){audio.volume=v/100;video.volume=v/100;}
+function setVolume(v){
+    audio.volume=v/100;
+    video.volume=v/100;
+}
 
 function seekTo(e){
     var bar=document.getElementById('progress-bar');
