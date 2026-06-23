@@ -417,17 +417,24 @@ function nextTrack(){
 }
 
 function playJingleThen(cb){
-    if(!window.speechSynthesis){if(cb)cb();return;}
-    window.speechSynthesis.cancel();
+    var done=false,started=false;
+    function go(){if(done)return;done=true;if(cb)cb();}
+    if(!window.speechSynthesis){go();return;}
+    try{window.speechSynthesis.cancel();}catch(e){}
     var u=new SpeechSynthesisUtterance('LORD Radio Station... twenty four, twenty four... إذاعتي');
     u.lang='ar-SA'; u.rate=0.78; u.pitch=1.1; u.volume=1;
     var voices=window.speechSynthesis.getVoices();
     var v=voices.find(function(x){return x.lang==='ar-SA';})
          ||voices.find(function(x){return x.lang.startsWith('ar');});
     if(v)u.voice=v;
-    u.onend=function(){if(cb)cb();};
-    u.onerror=function(){if(cb)cb();};
+    u.onstart=function(){started=true;};
+    u.onend=go;
+    u.onerror=go;
     window.speechSynthesis.speak(u);
+    // Si le jingle ne démarre pas (bug speechSynthesis bloqué) → on enchaîne vite
+    setTimeout(function(){if(!started)go();},1200);
+    // Filet de sécurité absolu : la musique continue quoi qu'il arrive
+    setTimeout(go,8000);
 }
 
 function prevTrack(){
