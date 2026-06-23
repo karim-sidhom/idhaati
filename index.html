@@ -146,15 +146,28 @@
         .radio-waves.on span:nth-child(2){animation-delay:.25s;}
         .radio-waves.on span:nth-child(3){animation-delay:.5s;}
         @keyframes wave{0%{opacity:0;transform:rotate(-30deg) scale(0.4);}40%{opacity:0.9;}100%{opacity:0;transform:rotate(-30deg) scale(1.1);}}
-        .radio-body{background:linear-gradient(160deg,rgba(13,26,110,0.6),rgba(2,9,40,0.85));border:1.5px solid rgba(255,215,0,0.35);border-radius:18px;padding:18px;box-shadow:inset 0 1px 0 rgba(255,215,0,0.2),0 8px 30px rgba(0,0,0,0.4);position:relative;}
-        .radio-speaker{position:relative;height:88px;border-radius:12px;background:radial-gradient(circle at 50% 40%,rgba(255,215,0,0.08),rgba(2,9,40,0.6));border:1px solid rgba(255,215,0,0.2);margin-bottom:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-        .speaker-grille{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,215,0,0.18) 1px,transparent 1.6px);background-size:9px 9px;opacity:0.5;}
+        .radio-body{background:linear-gradient(160deg,#fff6cc 0%,#ffe066 16%,#e0a800 36%,#fff2b0 52%,#ffcc00 70%,#b8860a 88%,#ffd700 100%);border:1.5px solid rgba(255,250,200,0.8);border-radius:18px;padding:18px;box-shadow:inset 0 2px 3px rgba(255,255,220,0.9),inset 0 -2px 4px rgba(120,80,0,0.4),0 8px 30px rgba(0,0,0,0.5);position:relative;}
+        .radio-body::after{content:'';position:absolute;inset:0;border-radius:18px;background:linear-gradient(105deg,transparent 40%,rgba(255,255,240,0.45) 48%,transparent 56%);pointer-events:none;}
+        .radio-speaker{position:relative;height:88px;border-radius:12px;background:linear-gradient(160deg,#6b4e0a,#2e1f00);border:1px solid rgba(80,50,0,0.6);box-shadow:inset 0 2px 6px rgba(0,0,0,0.6),inset 0 -1px 0 rgba(255,215,0,0.25);margin-bottom:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+        .speaker-grille{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(0,0,0,0.5) 1.4px,transparent 2px);background-size:9px 9px;opacity:0.7;}
         .radio-dial{margin-bottom:14px;}
-        .dial-screen{position:relative;background:linear-gradient(180deg,rgba(255,215,0,0.1),rgba(2,9,40,0.5));border:1px solid rgba(255,215,0,0.3);border-radius:10px;padding:12px 14px 16px;text-align:center;overflow:hidden;}
-        .dial-freq{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold-bright);opacity:0.8;margin-bottom:5px;}
+        .dial-screen{position:relative;background:linear-gradient(180deg,#3a2e00,#1a1400);border:1px solid rgba(80,50,0,0.6);border-radius:10px;padding:12px 14px 18px;text-align:center;overflow:hidden;box-shadow:inset 0 2px 8px rgba(0,0,0,0.7),0 0 14px rgba(255,215,0,0.2);}
+        .dial-freq{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold-shine);opacity:0.95;margin-bottom:5px;text-shadow:0 0 6px rgba(255,215,0,0.7);}
+        .dial-station{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--gold-shine);opacity:0.7;margin-top:4px;}
+        .player-title{color:var(--gold-shine) !important;text-shadow:0 0 8px rgba(255,215,0,0.6);}
         .dial-needle{position:absolute;bottom:6px;left:8px;right:8px;height:2px;background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);}
         .dial-needle::after{content:'';position:absolute;top:-3px;left:50%;width:2px;height:8px;background:var(--red);box-shadow:0 0 6px var(--red);animation:needle 4s ease-in-out infinite;}
         @keyframes needle{0%,100%{left:18%;}50%{left:82%;}}
+        .radio-body .ctrl-btn{color:#6b4e0a;}
+        .radio-body .ctrl-btn.play-main{background:linear-gradient(160deg,#fff6cc,#ffd700,#b8860a);color:#2e1f00;border:1px solid rgba(255,250,200,0.8);box-shadow:inset 0 1px 2px rgba(255,255,220,0.9),0 2px 6px rgba(120,80,0,0.5);}
+        .radio-body .ctrl-btn.active{color:#8a6500;text-shadow:none;}
+        .radio-body .time-row span,.radio-body .volume-row span{color:#6b4e0a;}
+        .radio-body input[type=range]{background:rgba(120,80,0,0.3);}
+        .radio-body input[type=range]::-webkit-slider-thumb{background:#6b4e0a;}
+        .radio-body .progress-bar{background:rgba(120,80,0,0.25);}
+        .radio-body .progress-fill{background:linear-gradient(90deg,#b8860a,#6b4e0a);}
+        .antenna-rod{width:3px;height:46px;background:linear-gradient(180deg,#fff6cc,#ffd700,#b8860a);border-radius:2px;box-shadow:0 0 6px var(--gold-glow);transform-origin:bottom center;transform:rotate(18deg);}
+        .antenna-tip{position:absolute;top:-6px;left:calc(50% + 14px);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#fff6cc,#b8860a);box-shadow:0 0 12px var(--gold-glow),0 0 24px rgba(255,215,0,0.6);}
     </style>
 </head>
 <body>
@@ -249,6 +262,7 @@
                     <div class="dial-screen">
                         <div class="dial-freq">FM · إذاعتي</div>
                         <div class="player-title" id="player-title">جارٍ التشغيل...</div>
+                        <div class="dial-station">LORD RADIO STATION · 24/24</div>
                         <div class="dial-needle"></div>
                     </div>
                 </div>
@@ -387,7 +401,7 @@ function nextTrack(){
 function playJingleThen(cb){
     if(!window.speechSynthesis){if(cb)cb();return;}
     window.speechSynthesis.cancel();
-    var u=new SpeechSynthesisUtterance('Radio LORD... إذاعتي... LORD SIDHOM I');
+    var u=new SpeechSynthesisUtterance('LORD Radio Station... twenty four, twenty four... إذاعتي');
     u.lang='ar-SA'; u.rate=0.78; u.pitch=1.1; u.volume=1;
     var voices=window.speechSynthesis.getVoices();
     var v=voices.find(function(x){return x.lang==='ar-SA';})
@@ -454,7 +468,7 @@ setInterval(updateProgress,500);
 // ── JINGLE RADIO LORD ──
 function playJingle(){
     if(!window.speechSynthesis)return;
-    var u=new SpeechSynthesisUtterance('Radio LORD... إذاعتي... LORD SIDHOM I — The Conceptor');
+    var u=new SpeechSynthesisUtterance('LORD Radio Station... twenty four, twenty four... إذاعتي... LORD SIDHOM I — The Conceptor');
     u.lang='ar-SA'; u.rate=0.78; u.pitch=1.1; u.volume=1;
     var voices=window.speechSynthesis.getVoices();
     var v=voices.find(function(x){return x.lang==='ar-SA';})
