@@ -374,21 +374,37 @@ function loadTrack(idx){
     document.getElementById('time-cur').textContent='0:00';
     document.getElementById('time-tot').textContent='0:00';
     if(t.isVideo){
-        video.src=t.url;video.style.display='block';
+        video.src=t.url;video.style.display='block';video.load();
     } else {
-        audio.src=t.url;
+        audio.src=t.url;audio.load();
     }
+    updateMediaSession(t);
 }
 
 function getMedia(){return currentIdx>=0&&playlist[currentIdx]&&playlist[currentIdx].isVideo?video:audio;}
 
 function playMedia(){
-    getMedia().play().then(function(){
-        isPlaying=true;
-        document.getElementById('btn-play').textContent='⏸';
-        document.getElementById('equalizer').classList.add('playing');
-        var w=document.getElementById('radio-waves');if(w)w.classList.add('on');
-    }).catch(function(){});
+    var m=getMedia();
+    var p=m.play();
+    if(p&&p.then){
+        p.then(function(){
+            failCount=0;
+            isPlaying=true;
+            document.getElementById('btn-play').textContent='⏸';
+            document.getElementById('equalizer').classList.add('playing');
+            var w=document.getElementById('radio-waves');if(w)w.classList.add('on');
+            if('mediaSession' in navigator)navigator.mediaSession.playbackState='playing';
+        }).catch(function(){
+            // play() refusé par le navigateur (autoplay mobile bloqué après 1-2 pistes).
+            // On NE relance PAS en boucle (ça resterait bloqué) : on remet ▶ pour relancer d'un tap,
+            // et les contrôles OS (écran verrouillé) restent dispo.
+            isPlaying=false;
+            document.getElementById('btn-play').textContent='▶';
+            document.getElementById('equalizer').classList.remove('playing');
+            var w=document.getElementById('radio-waves');if(w)w.classList.remove('on');
+            if('mediaSession' in navigator)navigator.mediaSession.playbackState='paused';
+        });
+    }
 }
 
 function togglePlay(){
@@ -502,6 +518,32 @@ var failCount=0;
 
 audio.volume=0.8;video.volume=0.8;
 setInterval(updateProgress,500);
+
+// ── MEDIA SESSION : contrôles OS / écran verrouillé + aide lecture continue mobile ──
+function updateMediaSession(t){
+    if(!('mediaSession' in navigator)||!t)return;
+    try{
+        navigator.mediaSession.metadata=new MediaMetadata({
+            title:t.name||'إذاعتي',
+            artist:'LORD RADIO STATION · 24/24',
+            album:'إذاعتي'
+        });
+    }catch(e){}
+}
+if('mediaSession' in navigator){
+    try{
+        navigator.mediaSession.setActionHandler('play',function(){playMedia();});
+        navigator.mediaSession.setActionHandler('pause',function(){
+            getMedia().pause();isPlaying=false;
+            document.getElementById('btn-play').textContent='▶';
+            document.getElementById('equalizer').classList.remove('playing');
+            var w=document.getElementById('radio-waves');if(w)w.classList.remove('on');
+            navigator.mediaSession.playbackState='paused';
+        });
+        navigator.mediaSession.setActionHandler('nexttrack',function(){nextTrack();});
+        navigator.mediaSession.setActionHandler('previoustrack',function(){prevTrack();});
+    }catch(e){}
+}
 
 // ── JINGLE RADIO LORD ──
 function playJingle(){
