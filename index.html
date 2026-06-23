@@ -412,8 +412,9 @@ function nextTrack(){
         idx=currentIdx+1;
         if(idx>=playlist.length) idx=0;
     }
-    // Jingle entre morceaux puis lecture suivante
-    playJingleThen(function(){ loadTrack(idx); playMedia(); });
+    // Charger et jouer directement sans jingle
+    loadTrack(idx);
+    playMedia();
 }
 
 function playJingleThen(cb){
