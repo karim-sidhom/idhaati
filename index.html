@@ -480,13 +480,22 @@ function updateProgress(){
     if(playlist[currentIdx])playlist[currentIdx].duration=formatTime(m.duration);
 }
 
+var failCount=0;
 [audio,video].forEach(function(m){
     m.addEventListener('timeupdate',updateProgress);
     m.addEventListener('ended',function(){
         // Toujours continuer — boucle playlist entière
+        failCount=0;
         nextTrack();
     });
+    m.addEventListener('error',function(){
+        // Piste injoignable (mp3 manquant / réseau) → on saute à la suivante
+        // au lieu de couper la radio
+        failCount++;
+        if(failCount<=playlist.length) nextTrack();
+    });
     m.addEventListener('loadedmetadata',function(){
+        failCount=0;
         document.getElementById('time-tot').textContent=formatTime(m.duration);
     });
 });
