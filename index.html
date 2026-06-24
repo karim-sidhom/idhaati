@@ -347,10 +347,69 @@ var RADIO_TRACKS = [
     {name:'Quarter In The Dryer II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(9).mp3', isVideo:false, duration:'--:--'},
     {name:'Quarter In The Dryer — Remix', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(Remix)%20(2).mp3', isVideo:false, duration:'--:--'},
     {name:'Quarter In The Dryer — Remix II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(Remix)%20(3).mp3', isVideo:false, duration:'--:--'},
+    // ── AJOUT : nouveaux titres kieda.online ──
+    {name:'صيف العرب', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'صيف العرب (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8.mp3', isVideo:false, duration:'--:--'},
+    {name:'طريقك وين', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'طريقك وين (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86.mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(3).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1.mp3', isVideo:false, duration:'--:--'},
 ];
+
+/* ── AJOUT : auto-intégration des chansons du dépôt kieda ──
+   Au démarrage, lit le dépôt GitHub et ajoute tout MP3 absent de la
+   playlist (donc tes futurs uploads apparaissent seuls). Repli silencieux :
+   si GitHub ne répond pas, la radio garde la playlist fixe ci-dessus.
+   Cache local 6h pour ne pas taper la limite d'API GitHub. */
+var GH_CONTENTS = 'https://api.github.com/repos/karim-sidhom/kieda/contents/';
+var GH_CACHE_KEY = 'kieda_mp3_cache_v1';
+var GH_CACHE_TTL = 6 * 60 * 60 * 1000;
+
+function fileFromUrl(u){
+    try { return decodeURIComponent((String(u).split('/main/')[1] || '').split('?')[0]); }
+    catch(e){ return ''; }
+}
+
+function ghDiscover(){
+    try {
+        var c = JSON.parse(localStorage.getItem(GH_CACHE_KEY) || 'null');
+        if (c && Array.isArray(c.items) && (Date.now() - c.t) < GH_CACHE_TTL) return Promise.resolve(c.items);
+    } catch(e){}
+    return fetch(GH_CONTENTS, {headers:{'Accept':'application/vnd.github+json'}})
+        .then(function(r){ return r.ok ? r.json() : []; })
+        .then(function(arr){
+            if (!Array.isArray(arr)) return [];
+            var items = arr.filter(function(f){ return f.type === 'file' && /\.mp3$/i.test(f.name); })
+                           .map(function(f){ return {file:f.name, name:f.name.replace(/\.mp3$/i,''), url:f.download_url}; });
+            try { localStorage.setItem(GH_CACHE_KEY, JSON.stringify({t:Date.now(), items:items})); } catch(e){}
+            return items;
+        })
+        .catch(function(){ return []; });
+}
+
+function enrichPlaylistFromGitHub(){
+    ghDiscover().then(function(items){
+        if (!items || !items.length) return;
+        var have = {};
+        playlist.forEach(function(t){ var f = fileFromUrl(t.url); if (f) have[f] = 1; });
+        var added = 0;
+        items.forEach(function(d){
+            if (!have[d.file]) {
+                have[d.file] = 1;
+                playlist.push({name:d.name, url:d.url, isVideo:false, duration:'--:--'});
+                added++;
+            }
+        });
+        if (added && typeof showNotif === 'function') showNotif('\u2795 ' + added + ' \u0645\u0642\u0637\u0639 \u062c\u062f\u064a\u062f \u0623\u064f\u0636\u064a\u0641 \u0644\u0644\u0625\u0630\u0627\u0639\u0629', true);
+    });
+}
+
 window.addEventListener('load', function(){
     playlist = RADIO_TRACKS.slice();
     loadTrack(0);
+    enrichPlaylistFromGitHub();   // ajoute les MP3 récents du dépôt
 });
 
 // Autoplay après premier clic
