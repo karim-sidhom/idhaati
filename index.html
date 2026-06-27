@@ -324,38 +324,77 @@ var playlist=[],currentIdx=-1,isPlaying=false,shuffle=false,repeat=false;
 var audio=document.getElementById('audio-player');
 var video=document.getElementById('video-player');
 
-// ── Playlist fixe de l'éclat (إذاعتي) ──
+// ── Playlist complète إذاعتي — toutes les chansons du dépôt kieda ──
 var RADIO_TRACKS = [
+    // سألتُ الريح
     {name:'سألتُ الريح', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D8%A3%D9%84%D8%AA%D9%8F%20%D8%A7%D9%84%D8%B1%D9%8A%D8%AD%20(1).mp3', isVideo:false, duration:'--:--'},
     {name:'سألتُ الريح (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D8%A3%D9%84%D8%AA%D9%8F%20%D8%A7%D9%84%D8%B1%D9%8A%D8%AD.mp3', isVideo:false, duration:'--:--'},
+    {name:'سألتُ الريح III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D8%A3%D9%84%D8%AA%D9%8F%20%D8%A7%D9%84%D8%B1%D9%8A%D8%AD%20(3).mp3', isVideo:false, duration:'--:--'},
+    // سُلَّم العز
     {name:'سُلَّم العز', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D9%8F%D9%84%D9%8E%D9%85%D9%85%20%D8%A7%D9%84%D8%B9%D8%B2%20(2).mp3', isVideo:false, duration:'--:--'},
     {name:'سُلَّم العز II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D9%8F%D9%84%D9%8E%D9%85%D9%85%20%D8%A7%D9%84%D8%B9%D8%B2%20(3).mp3', isVideo:false, duration:'--:--'},
+    {name:'سُلَّم العز (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D9%8F%D9%84%D9%8E%D9%85%D9%85%20%D8%A7%D9%84%D8%B9%D8%B2.mp3', isVideo:false, duration:'--:--'},
+    // صيف العرب
+    {name:'صيف العرب', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'صيف العرب II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'صيف العرب III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%20(3).mp3', isVideo:false, duration:'--:--'},
+    {name:'صيف العرب (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8.mp3', isVideo:false, duration:'--:--'},
+    // طريقك وين
+    {name:'طريقك وين', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'طريقك وين II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'طريقك وين III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86%20(3).mp3', isVideo:false, duration:'--:--'},
+    {name:'طريقك وين (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86.mp3', isVideo:false, duration:'--:--'},
+    // في تونس نلقى روحي
+    {name:'في تونس نلقى روحي III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%81%D9%8A%20%D8%AA%D9%88%D9%86%D8%B3%20%D9%86%D9%84%D9%82%D9%89%20%D8%B1%D9%88%D8%AD%D9%8A%20(3).mp3', isVideo:false, duration:'--:--'},
+    {name:'في تونس نلقى روحي IV', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%81%D9%8A%20%D8%AA%D9%88%D9%86%D8%B3%20%D9%86%D9%84%D9%82%D9%89%20%D8%B1%D9%88%D8%AD%D9%8A%20(4).mp3', isVideo:false, duration:'--:--'},
+    // ليل وغنا
     {name:'ليل وغنا', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%84%D9%8A%D9%84%20%D9%88%D8%BA%D9%86%D8%A7%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'ليل وغنا III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%84%D9%8A%D9%84%20%D9%88%D8%BA%D9%86%D8%A7%20(3).mp3', isVideo:false, duration:'--:--'},
+    {name:'ليل وغنا IV', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%84%D9%8A%D9%84%20%D9%88%D8%BA%D9%86%D8%A7%20(4).mp3', isVideo:false, duration:'--:--'},
     {name:'ليل وغنا (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%84%D9%8A%D9%84%20%D9%88%D8%BA%D9%86%D8%A7.mp3', isVideo:false, duration:'--:--'},
+    // نور
     {name:'نور', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%86%D9%88%D8%B1%20(3).mp3', isVideo:false, duration:'--:--'},
+    // يا صاحبي هيا بينا
+    {name:'يا صاحبي هيا بينا', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D8%B5%D8%A7%D8%AD%D8%A8%D9%8A%20%D9%87%D9%8A%D8%A7%20%D8%A8%D9%8A%D9%86%D8%A7%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا صاحبي هيا بينا (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D8%B5%D8%A7%D8%AD%D8%A8%D9%8A%20%D9%87%D9%8A%D8%A7%20%D8%A8%D9%8A%D9%86%D8%A7.mp3', isVideo:false, duration:'--:--'},
+    // يا ليل
     {name:'يا ليل', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل IV', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20(4).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل V', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20(5).mp3', isVideo:false, duration:'--:--'},
     {name:'يا ليل (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84.mp3', isVideo:false, duration:'--:--'},
+    // يا ليل نار
+    {name:'يا ليل نار', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(3).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار IV', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(4).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار V', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(5).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار VI', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(6).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1.mp3', isVideo:false, duration:'--:--'},
+    // يا من سكنتَ القلبَ
     {name:'يا من سكنتَ القلبَ', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%85%D9%86%20%D8%B3%D9%83%D9%86%D8%AA%D9%8E%20%D8%A7%D9%84%D9%82%D9%84%D8%A8%D9%8E%20%D9%85%D9%86%D8%B0%D9%8F%20%D8%B7%D9%81%D9%88%D9%84%D8%AA%D9%8A%20(1).mp3', isVideo:false, duration:'--:--'},
     {name:'يا من سكنتَ القلبَ (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%85%D9%86%20%D8%B3%D9%83%D9%86%D8%AA%D9%8E%20%D8%A7%D9%84%D9%82%D9%84%D8%A8%D9%8E%20%D9%85%D9%86%D8%B0%D9%8F%20%D8%B7%D9%81%D9%88%D9%84%D8%AA%D9%8A.mp3', isVideo:false, duration:'--:--'},
+    // يا من ظننت الهوى
     {name:'يا من ظننت الهوى وعدًا يدوم', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%85%D9%86%20%D8%B8%D9%86%D9%86%D8%AA%20%D8%A7%D9%84%D9%87%D9%88%D9%89%20%D9%88%D8%B9%D8%AF%D9%8B%D8%A7%20%D9%8A%D8%AF%D9%88%D9%85%20(2).mp3', isVideo:false, duration:'--:--'},
-    {name:'سألتُ الريح III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D8%A3%D9%84%D8%AA%D9%8F%20%D8%A7%D9%84%D8%B1%D9%8A%D8%AD%20(3).mp3', isVideo:false, duration:'--:--'},
-    {name:'سُلَّم العز (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D9%8F%D9%84%D9%8E%D9%85%D9%85%20%D8%A7%D9%84%D8%B9%D8%B2.mp3', isVideo:false, duration:'--:--'},
-    {name:'ليل وغنا III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%84%D9%8A%D9%84%20%D9%88%D8%BA%D9%86%D8%A7%20(3).mp3', isVideo:false, duration:'--:--'},
-    {name:'يا ليل II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20(2).mp3', isVideo:false, duration:'--:--'},
     {name:'يا من ظننت الهوى وعدًا يدوم (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%85%D9%86%20%D8%B8%D9%86%D9%86%D8%AA%20%D8%A7%D9%84%D9%87%D9%88%D9%89%20%D9%88%D8%B9%D8%AF%D9%8B%D8%A7%20%D9%8A%D8%AF%D9%88%D9%85%20(1).mp3', isVideo:false, duration:'--:--'},
+    // أَلا قُمْ لِلْحَقِّ
+    {name:'أَلا قُمْ لِلْحَقِّ، يَا', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%A3%D9%8E%D9%84%D8%A7%20%D9%82%D9%8F%D9%85%D9%92%20%D9%84%D9%90%D9%84%D9%92%D8%AD%D9%8E%D9%82%D9%91%D9%90%D8%8C%20%D9%8A%D9%8E%D8%A7%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'أَلا قُمْ لِلْحَقِّ، يَا (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%A3%D9%8E%D9%84%D8%A7%20%D9%82%D9%8F%D9%85%D9%92%20%D9%84%D9%90%D9%84%D9%92%D8%AD%D9%8E%D9%82%D9%91%D9%90%D8%8C%20%D9%8A%D9%8E%D8%A7.mp3', isVideo:false, duration:'--:--'},
+    // Lost Signal
+    {name:'Lost Signal', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Lost%20Signal%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'Lost Signal (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Lost%20Signal.mp3', isVideo:false, duration:'--:--'},
+    // Stayed True
+    {name:'Stayed True', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Stayed%20True%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'Stayed True II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Stayed%20True%20(3).mp3', isVideo:false, duration:'--:--'},
+    {name:'Stayed True III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Stayed%20True%20(4).mp3', isVideo:false, duration:'--:--'},
+    // Still in Motion
+    {name:'Still in Motion', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Still%20in%20Motion%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'Still in Motion (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Still%20in%20Motion.mp3', isVideo:false, duration:'--:--'},
+    // Quarter In The Dryer
     {name:'Quarter In The Dryer', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(7).mp3', isVideo:false, duration:'--:--'},
     {name:'Quarter In The Dryer II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(9).mp3', isVideo:false, duration:'--:--'},
     {name:'Quarter In The Dryer — Remix', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(Remix)%20(2).mp3', isVideo:false, duration:'--:--'},
     {name:'Quarter In The Dryer — Remix II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(Remix)%20(3).mp3', isVideo:false, duration:'--:--'},
-    // ── AJOUT : nouveaux titres kieda.online ──
-    {name:'صيف العرب', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%20(1).mp3', isVideo:false, duration:'--:--'},
-    {name:'صيف العرب (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8.mp3', isVideo:false, duration:'--:--'},
-    {name:'طريقك وين', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86%20(1).mp3', isVideo:false, duration:'--:--'},
-    {name:'طريقك وين (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86.mp3', isVideo:false, duration:'--:--'},
-    {name:'يا ليل نار', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(1).mp3', isVideo:false, duration:'--:--'},
-    {name:'يا ليل نار II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(2).mp3', isVideo:false, duration:'--:--'},
-    {name:'يا ليل نار III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(3).mp3', isVideo:false, duration:'--:--'},
-    {name:'يا ليل نار (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1.mp3', isVideo:false, duration:'--:--'},
 ];
 
 /* ── AJOUT : auto-intégration des chansons du dépôt kieda ──
@@ -407,7 +446,9 @@ function enrichPlaylistFromGitHub(){
 
 window.addEventListener('load', function(){
     playlist = RADIO_TRACKS.slice();
-    loadTrack(0);
+    // Démarrage sur une chanson aléatoire à chaque ouverture
+    var startIdx = Math.floor(Math.random() * playlist.length);
+    loadTrack(startIdx);
     enrichPlaylistFromGitHub();   // ajoute les MP3 récents du dépôt
 });
 
@@ -439,9 +480,44 @@ function loadTrack(idx){
     if(t.isVideo){
         video.src=t.url;video.style.display='block';video.load();
     } else {
-        audio.src=t.url;audio.load();
+        // Utiliser l'audio pré-chargé si disponible pour enchaînement instantané
+        if(audioNext._preloadedIdx === idx && audioNext.src && audioNext.readyState >= 2){
+            // Swap : l'audio pré-chargé devient le principal
+            var tmpSrc = audioNext.src;
+            audio.src = tmpSrc;
+            // Pas de load() — l'audio est déjà en mémoire
+        } else {
+            audio.src=t.url;
+            audio.load();
+        }
     }
+    // Pré-charger la suivante dès maintenant
+    preloadNext(idx);
     updateMediaSession(t);
+    // Mettre à jour le titre affiché
+    var titleEl = document.getElementById('player-title');
+    if(titleEl) titleEl.textContent = t.name || '🔴 على الهواء مباشرة';
+}
+
+// ── PRÉ-CHARGEMENT : audio secondaire pour enchaînement instantané ──
+var audioNext = new Audio();
+audioNext.preload = 'auto';
+audioNext.volume = 0.8;
+
+function preloadNext(idx){
+    if(!playlist.length) return;
+    var next;
+    if(shuffle){
+        next = Math.floor(Math.random() * playlist.length);
+    } else {
+        next = (idx + 1) % playlist.length;
+    }
+    var t = playlist[next];
+    if(t && !t.isVideo){
+        audioNext.src = t.url;
+        audioNext.load();
+        audioNext._preloadedIdx = next;
+    }
 }
 
 function getMedia(){return currentIdx>=0&&playlist[currentIdx]&&playlist[currentIdx].isVideo?video:audio;}
@@ -485,13 +561,15 @@ function togglePlay(){
 function nextTrack(){
     if(!playlist.length)return;
     var idx;
-    if(shuffle){
+    // Si on a un audio pré-chargé prêt, l'utiliser directement
+    if(!shuffle && audioNext._preloadedIdx !== undefined){
+        idx = audioNext._preloadedIdx;
+    } else if(shuffle){
         idx=Math.floor(Math.random()*playlist.length);
     } else {
         idx=currentIdx+1;
         if(idx>=playlist.length) idx=0;
     }
-    // Charger et jouer directement sans jingle
     loadTrack(idx);
     playMedia();
 }
@@ -569,13 +647,21 @@ var failCount=0;
     });
     m.addEventListener('error',function(){
         // Piste injoignable (mp3 manquant / réseau) → on saute à la suivante
-        // au lieu de couper la radio
         failCount++;
         if(failCount<=playlist.length) nextTrack();
     });
     m.addEventListener('loadedmetadata',function(){
         failCount=0;
         document.getElementById('time-tot').textContent=formatTime(m.duration);
+        // Mise à jour du titre quand la piste est confirmée chargée
+        if(playlist[currentIdx]){
+            var titleEl = document.getElementById('player-title');
+            if(titleEl) titleEl.textContent = playlist[currentIdx].name || '🔴 على الهواء مباشرة';
+        }
+    });
+    // Précharger la suivante dès que la piste courante a assez chargé
+    m.addEventListener('canplaythrough', function(){
+        if(m === audio) preloadNext(currentIdx);
     });
 });
 
