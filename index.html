@@ -27,22 +27,8 @@
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         body{font-family:'Tajawal',sans-serif;background-color:var(--royal-deep);color:var(--text);min-height:100vh;display:flex;justify-content:center;padding:28px 16px 60px;overflow-x:hidden;position:relative;}
 
-        /* VIDÉO EN ARRIÈRE-PLAN */
-        .bg-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        /* OPACITÉ RÉDUITE POUR LAISSER VOIR LA VIDÉO */
-        .bg-overlay{position:fixed;inset:0;background:linear-gradient(180deg,rgba(2,11,46,0.60) 0%,rgba(2,11,46,0.30) 40%,rgba(2,11,46,0.70) 100%),radial-gradient(ellipse 70% 50% at 50% 0%,rgba(13,26,110,0.40) 0%,transparent 70%);z-index:-1;}
-        
-        .bg-pattern{position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cdefs%3E%3Cstyle%3E.g%7Bfill:none;stroke:rgba(212,160,23,0.06);stroke-width:0.7%7D%3C/style%3E%3C/defs%3E%3Cpath class='g' d='M50 0L100 50L50 100L0 50Z'/%3E%3Cpath class='g' d='M50 18L82 50L50 82L18 50Z'/%3E%3Ccircle class='g' cx='50' cy='50' r='22'/%3E%3C/svg%3E");background-size:100px 100px;z-index:0;opacity:0.4;}
+        .bg-overlay{position:fixed;inset:0;background:linear-gradient(180deg,rgba(2,11,46,0.82) 0%,rgba(2,11,46,0.60) 40%,rgba(2,11,46,0.88) 100%),radial-gradient(ellipse 70% 50% at 50% 0%,rgba(13,26,110,0.65) 0%,transparent 70%);z-index:0;}
+        .bg-pattern{position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cdefs%3E%3Cstyle%3E.g%7Bfill:none;stroke:rgba(212,160,23,0.06);stroke-width:0.7%7D%3C/style%3E%3C/defs%3E%3Cpath class='g' d='M50 0L100 50L50 100L0 50Z'/%3E%3Cpath class='g' d='M50 18L82 50L50 82L18 50Z'/%3E%3Ccircle class='g' cx='50' cy='50' r='22'/%3E%3C/svg%3E");background-size:100px 100px;z-index:0;opacity:0.7;}
 
         .bg-ornament{position:fixed;pointer-events:none;z-index:1;opacity:0.18;}
         .bg-ornament.tl{top:-70px;left:-70px;width:280px;height:280px;animation:spin 45s linear infinite;}
@@ -144,12 +130,13 @@
         .item-type{font-size:10px;color:var(--text-dim);margin-top:1px;}
         .item-dur{font-size:10px;color:var(--text-dim);}
 
+        /* ADD — DISABLED */
+
         /* FOOTER */
         .footer{text-align:center;font-size:10px;color:var(--text-dim);margin-top:20px;position:relative;z-index:2;}
         .footer strong{color:var(--gold-bright);}
         .footer-arabic{font-family:'Amiri',serif;font-size:16px;display:block;color:var(--gold-24);margin-bottom:3px;}
         .footer-sub{font-size:9px;letter-spacing:3px;color:rgba(212,160,23,0.35);}
-        
         /* ═══ POSTE RADIO ═══ */
         .radio-set{position:relative;padding-top:54px;}
         .antenna-wrap{position:absolute;top:0;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:3;}
@@ -184,11 +171,11 @@
         .radio-body input[type=range]::-webkit-slider-thumb{background:#6b4e0a;}
         .radio-body .progress-bar{background:rgba(120,80,0,0.25);}
         .radio-body .progress-fill{background:linear-gradient(90deg,#b8860a,#6b4e0a);}
+        .antenna-rod{width:3px;height:46px;background:linear-gradient(180deg,#fff6cc,#ffd700,#b8860a);border-radius:2px;box-shadow:0 0 6px var(--gold-glow);transform-origin:bottom center;transform:rotate(18deg);}
+        .antenna-tip{position:absolute;top:-6px;left:calc(50% + 14px);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#fff6cc,#b8860a);box-shadow:0 0 12px var(--gold-glow),0 0 24px rgba(255,215,0,0.6);}
     </style>
 </head>
 <body>
-<video class="bg-video" autoplay loop muted playsinline src="je_veut_un_evideo_plus_luxiuus.mp4"></video>
-
 <div class="gold-topline"></div>
 <div class="bg-overlay"></div>
 <div class="bg-pattern"></div>
@@ -199,6 +186,7 @@
 
 <div class="app">
 
+    <!-- QURAN BANNER -->
     <div class="quran-banner">
         <span class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
         <div class="quran-line-divider"></div>
@@ -206,6 +194,7 @@
         <div class="quran-ref">سورة سبأ — الآية ١٠</div>
     </div>
 
+    <!-- HEADER -->
     <div class="header">
         <div class="crown-ring">
             <svg width="54" height="72" viewBox="0 0 54 72" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -220,11 +209,17 @@
     </linearGradient>
     <filter id="glow"><feGaussianBlur stdDeviation="1.5" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
   </defs>
+  <!-- Corps principal clé de sol -->
   <path d="M27 4 C27 4 20 8 20 18 C20 26 24 30 27 32 C27 32 18 36 18 46 C18 56 24 62 30 64 C36 66 42 62 42 54 C42 46 36 42 30 40 L30 20 C34 18 38 14 38 10 C38 6 33 2 27 4Z" fill="url(#g1)" filter="url(#glow)" stroke="#b8730a" stroke-width="0.8"/>
+  <!-- Boucle du haut -->
   <ellipse cx="27" cy="18" rx="8" ry="9" fill="none" stroke="url(#g1)" stroke-width="3.5"/>
+  <!-- Trou de la boucle -->
   <ellipse cx="27" cy="18" rx="4" ry="5" fill="var(--royal-deep)" opacity="0.6"/>
+  <!-- Queue descendante -->
   <line x1="30" y1="20" x2="30" y2="56" stroke="url(#g1)" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Crosse du bas -->
   <path d="M30 56 C30 56 38 54 38 46 C38 38 30 36 26 40 C22 44 24 52 30 54" fill="none" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"/>
+  <!-- Barres horizontales -->
   <line x1="22" y1="34" x2="30" y2="34" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
   <line x1="20" y1="40" x2="30" y2="40" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
 </svg>
@@ -242,8 +237,10 @@
         </div>
     </div>
 
+    <!-- POSTE RADIO -->
     <div class="card">
         <div class="radio-set">
+            <!-- Antenne avec ondes -->
             <div class="antenna-wrap">
                 <div class="radio-waves" id="radio-waves">
                     <span></span><span></span><span></span>
@@ -252,7 +249,9 @@
                 <div class="antenna-tip"></div>
             </div>
 
+            <!-- Corps du poste -->
             <div class="radio-body">
+                <!-- Haut-parleur -->
                 <div class="radio-speaker">
                     <div class="speaker-grille"></div>
                     <div class="equalizer" id="equalizer">
@@ -263,6 +262,7 @@
                     </div>
                 </div>
 
+                <!-- Cadran + écran -->
                 <div class="radio-dial">
                     <div class="dial-screen">
                         <div class="dial-freq">FM · إذاعتي</div>
@@ -275,6 +275,7 @@
                 <video id="video-player"></video>
                 <audio id="audio-player"></audio>
 
+                <!-- Progression -->
                 <div class="progress-bar" id="progress-bar" onclick="seekTo(event)">
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
@@ -283,6 +284,7 @@
                     <span id="time-tot">0:00</span>
                 </div>
 
+                <!-- Boutons — VISIBLE BUT DISABLED -->
                 <div class="controls">
                     <button class="ctrl-btn" disabled>⏮</button>
                     <button class="ctrl-btn" id="btn-shuffle" disabled>🔀</button>
@@ -291,6 +293,7 @@
                     <button class="ctrl-btn" disabled>⏭</button>
                 </div>
 
+                <!-- Volume -->
                 <div class="volume-row">
                     <span>🔈</span>
                     <input type="range" id="volume" min="0" max="100" value="80" oninput="setVolume(this.value)">
@@ -310,41 +313,408 @@
 
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script>
+// ── SERVICE WORKER DISABLED ──
+// if('serviceWorker' in navigator){
+//     navigator.serviceWorker.register('./sw.js').catch(function(err){
+//         console.log('SW registration failed:',err);
+//     });
+// }
+
 var playlist=[],currentIdx=-1,isPlaying=false,shuffle=false,repeat=false;
 var audio=document.getElementById('audio-player');
 var video=document.getElementById('video-player');
 
 // ── Playlist complète إذاعتي — toutes les chansons du dépôt kieda ──
 var RADIO_TRACKS = [
+    // سألتُ الريح
     {name:'سألتُ الريح', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D8%A3%D9%84%D8%AA%D9%8F%20%D8%A7%D9%84%D8%B1%D9%8A%D8%AD%20(1).mp3', isVideo:false, duration:'--:--'},
     {name:'سألتُ الريح (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D8%A3%D9%84%D8%AA%D9%8F%20%D8%A7%D9%84%D8%B1%D9%8A%D8%AD.mp3', isVideo:false, duration:'--:--'},
     {name:'سألتُ الريح III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D8%A3%D9%84%D8%AA%D9%8F%20%D8%A7%D9%84%D8%B1%D9%8A%D8%AD%20(3).mp3', isVideo:false, duration:'--:--'},
+    // سُلَّم العز
     {name:'سُلَّم العز', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D9%8F%D9%84%D9%8E%D9%85%D9%85%20%D8%A7%D9%84%D8%B9%D8%B2%20(2).mp3', isVideo:false, duration:'--:--'},
     {name:'سُلَّم العز II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D9%8F%D9%84%D9%8E%D9%85%D9%85%20%D8%A7%D9%84%D8%B9%D8%B2%20(3).mp3', isVideo:false, duration:'--:--'},
     {name:'سُلَّم العز (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B3%D9%8F%D9%84%D9%8E%D9%85%D9%85%20%D8%A7%D9%84%D8%B9%D8%B2.mp3', isVideo:false, duration:'--:--'},
+    // صيف العرب
     {name:'صيف العرب', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%20(1).mp3', isVideo:false, duration:'--:--'},
     {name:'صيف العرب II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%20(2).mp3', isVideo:false, duration:'--:--'},
     {name:'صيف العرب III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%20(3).mp3', isVideo:false, duration:'--:--'},
     {name:'صيف العرب (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B5%D9%8A%D9%81%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8.mp3', isVideo:false, duration:'--:--'},
+    // طريقك وين
     {name:'طريقك وين', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86%20(1).mp3', isVideo:false, duration:'--:--'},
     {name:'طريقك وين II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86%20(2).mp3', isVideo:false, duration:'--:--'},
     {name:'طريقك وين III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86%20(3).mp3', isVideo:false, duration:'--:--'},
     {name:'طريقك وين (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%B7%D8%B1%D9%8A%D9%82%D9%83%20%D9%88%D9%8A%D9%86.mp3', isVideo:false, duration:'--:--'},
+    // في تونس نلقى روحي
     {name:'في تونس نلقى روحي III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%81%D9%8A%20%D8%AA%D9%88%D9%86%D8%B3%20%D9%86%D9%84%D9%82%D9%89%20%D8%B1%D9%88%D8%AD%D9%8A%20(3).mp3', isVideo:false, duration:'--:--'},
     {name:'في تونس نلقى روحي IV', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%81%D9%8A%20%D8%AA%D9%88%D9%86%D8%B3%20%D9%86%D9%84%D9%82%D9%89%20%D8%B1%D9%88%D8%AD%D9%8A%20(4).mp3', isVideo:false, duration:'--:--'},
+    // ليل وغنا
     {name:'ليل وغنا', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%84%D9%8A%D9%84%20%D9%88%D8%BA%D9%86%D8%A7%20(1).mp3', isVideo:false, duration:'--:--'},
     {name:'ليل وغنا III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%84%D9%8A%D9%84%20%D9%88%D8%BA%D9%86%D8%A7%20(3).mp3', isVideo:false, duration:'--:--'},
     {name:'ليل وغنا IV', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%84%D9%8A%D9%84%20%D9%88%D8%BA%D9%86%D8%A7%20(4).mp3', isVideo:false, duration:'--:--'},
     {name:'ليل وغنا (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%84%D9%8A%D9%84%20%D9%88%D8%BA%D9%86%D8%A7.mp3', isVideo:false, duration:'--:--'},
+    // نور
     {name:'نور', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%86%D9%88%D8%B1%20(3).mp3', isVideo:false, duration:'--:--'},
+    // يا صاحبي هيا بينا
     {name:'يا صاحبي هيا بينا', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D8%B5%D8%A7%D8%AD%D8%A8%D9%8A%20%D9%87%D9%8A%D8%A7%20%D8%A8%D9%8A%D9%86%D8%A7%20(1).mp3', isVideo:false, duration:'--:--'},
     {name:'يا صاحبي هيا بينا (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D8%B5%D8%A7%D8%AD%D8%A8%D9%8A%20%D9%87%D9%8A%D8%A7%20%D8%A8%D9%8A%D9%86%D8%A7.mp3', isVideo:false, duration:'--:--'},
+    // يا ليل
     {name:'يا ليل', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20(1).mp3', isVideo:false, duration:'--:--'},
     {name:'يا ليل II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20(2).mp3', isVideo:false, duration:'--:--'},
     {name:'يا ليل IV', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20(4).mp3', isVideo:false, duration:'--:--'},
     {name:'يا ليل V', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20(5).mp3', isVideo:false, duration:'--:--'},
     {name:'يا ليل (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84.mp3', isVideo:false, duration:'--:--'},
+    // يا ليل نار
     {name:'يا ليل نار', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(1).mp3', isVideo:false, duration:'--:--'},
     {name:'يا ليل نار II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(2).mp3', isVideo:false, duration:'--:--'},
     {name:'يا ليل نار III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(3).mp3', isVideo:false, duration:'--:--'},
-    {name:'يا ليل نار IV', url:'
+    {name:'يا ليل نار IV', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(4).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار V', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(5).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار VI', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1%20(6).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا ليل نار (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%84%D9%8A%D9%84%20%D9%86%D8%A7%D8%B1.mp3', isVideo:false, duration:'--:--'},
+    // يا من سكنتَ القلبَ
+    {name:'يا من سكنتَ القلبَ', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%85%D9%86%20%D8%B3%D9%83%D9%86%D8%AA%D9%8E%20%D8%A7%D9%84%D9%82%D9%84%D8%A8%D9%8E%20%D9%85%D9%86%D8%B0%D9%8F%20%D8%B7%D9%81%D9%88%D9%84%D8%AA%D9%8A%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا من سكنتَ القلبَ (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%85%D9%86%20%D8%B3%D9%83%D9%86%D8%AA%D9%8E%20%D8%A7%D9%84%D9%82%D9%84%D8%A8%D9%8E%20%D9%85%D9%86%D8%B0%D9%8F%20%D8%B7%D9%81%D9%88%D9%84%D8%AA%D9%8A.mp3', isVideo:false, duration:'--:--'},
+    // يا من ظننت الهوى
+    {name:'يا من ظننت الهوى وعدًا يدوم', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%85%D9%86%20%D8%B8%D9%86%D9%86%D8%AA%20%D8%A7%D9%84%D9%87%D9%88%D9%89%20%D9%88%D8%B9%D8%AF%D9%8B%D8%A7%20%D9%8A%D8%AF%D9%88%D9%85%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'يا من ظننت الهوى وعدًا يدوم (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D9%8A%D8%A7%20%D9%85%D9%86%20%D8%B8%D9%86%D9%86%D8%AA%20%D8%A7%D9%84%D9%87%D9%88%D9%89%20%D9%88%D8%B9%D8%AF%D9%8B%D8%A7%20%D9%8A%D8%AF%D9%88%D9%85%20(1).mp3', isVideo:false, duration:'--:--'},
+    // أَلا قُمْ لِلْحَقِّ
+    {name:'أَلا قُمْ لِلْحَقِّ، يَا', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%A3%D9%8E%D9%84%D8%A7%20%D9%82%D9%8F%D9%85%D9%92%20%D9%84%D9%90%D9%84%D9%92%D8%AD%D9%8E%D9%82%D9%91%D9%90%D8%8C%20%D9%8A%D9%8E%D8%A7%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'أَلا قُمْ لِلْحَقِّ، يَا (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/%D8%A3%D9%8E%D9%84%D8%A7%20%D9%82%D9%8F%D9%85%D9%92%20%D9%84%D9%90%D9%84%D9%92%D8%AD%D9%8E%D9%82%D9%91%D9%90%D8%8C%20%D9%8A%D9%8E%D8%A7.mp3', isVideo:false, duration:'--:--'},
+    // Lost Signal
+    {name:'Lost Signal', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Lost%20Signal%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'Lost Signal (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Lost%20Signal.mp3', isVideo:false, duration:'--:--'},
+    // Stayed True
+    {name:'Stayed True', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Stayed%20True%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'Stayed True II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Stayed%20True%20(3).mp3', isVideo:false, duration:'--:--'},
+    {name:'Stayed True III', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Stayed%20True%20(4).mp3', isVideo:false, duration:'--:--'},
+    // Still in Motion
+    {name:'Still in Motion', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Still%20in%20Motion%20(1).mp3', isVideo:false, duration:'--:--'},
+    {name:'Still in Motion (أصلي)', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Still%20in%20Motion.mp3', isVideo:false, duration:'--:--'},
+    // Quarter In The Dryer
+    {name:'Quarter In The Dryer', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(7).mp3', isVideo:false, duration:'--:--'},
+    {name:'Quarter In The Dryer II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(9).mp3', isVideo:false, duration:'--:--'},
+    {name:'Quarter In The Dryer — Remix', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(Remix)%20(2).mp3', isVideo:false, duration:'--:--'},
+    {name:'Quarter In The Dryer — Remix II', url:'https://raw.githubusercontent.com/karim-sidhom/kieda/main/Quarter%20In%20The%20Dryer%20(Remix)%20(3).mp3', isVideo:false, duration:'--:--'},
+];
+
+/* ── AJOUT : auto-intégration des chansons du dépôt kieda ──
+   Au démarrage, lit le dépôt GitHub et ajoute tout MP3 absent de la
+   playlist (donc tes futurs uploads apparaissent seuls). Repli silencieux :
+   si GitHub ne répond pas, la radio garde la playlist fixe ci-dessus.
+   Cache local 6h pour ne pas taper la limite d'API GitHub. */
+var GH_CONTENTS = 'https://api.github.com/repos/karim-sidhom/kieda/contents/';
+var GH_CACHE_KEY = 'kieda_mp3_cache_v1';
+var GH_CACHE_TTL = 6 * 60 * 60 * 1000;
+
+function fileFromUrl(u){
+    try { return decodeURIComponent((String(u).split('/main/')[1] || '').split('?')[0]); }
+    catch(e){ return ''; }
+}
+
+function ghDiscover(){
+    try {
+        var c = JSON.parse(localStorage.getItem(GH_CACHE_KEY) || 'null');
+        if (c && Array.isArray(c.items) && (Date.now() - c.t) < GH_CACHE_TTL) return Promise.resolve(c.items);
+    } catch(e){}
+    return fetch(GH_CONTENTS, {headers:{'Accept':'application/vnd.github+json'}})
+        .then(function(r){ return r.ok ? r.json() : []; })
+        .then(function(arr){
+            if (!Array.isArray(arr)) return [];
+            var items = arr.filter(function(f){ return f.type === 'file' && /\.mp3$/i.test(f.name); })
+                           .map(function(f){ return {file:f.name, name:f.name.replace(/\.mp3$/i,''), url:f.download_url}; });
+            try { localStorage.setItem(GH_CACHE_KEY, JSON.stringify({t:Date.now(), items:items})); } catch(e){}
+            return items;
+        })
+        .catch(function(){ return []; });
+}
+
+function enrichPlaylistFromGitHub(){
+    ghDiscover().then(function(items){
+        if (!items || !items.length) return;
+        var have = {};
+        playlist.forEach(function(t){ var f = fileFromUrl(t.url); if (f) have[f] = 1; });
+        var added = 0;
+        items.forEach(function(d){
+            if (!have[d.file]) {
+                have[d.file] = 1;
+                playlist.push({name:d.name, url:d.url, isVideo:false, duration:'--:--'});
+                added++;
+            }
+        });
+    });
+}
+
+window.addEventListener('load', function(){
+    playlist = RADIO_TRACKS.slice();
+    // Démarrage sur une chanson aléatoire à chaque ouverture
+    var startIdx = Math.floor(Math.random() * playlist.length);
+    loadTrack(startIdx);
+    enrichPlaylistFromGitHub();   // ajoute les MP3 récents du dépôt
+});
+
+// Autoplay après premier clic
+document.addEventListener('click', function autoplayOnce(){
+    if(playlist.length && !isPlaying){
+        playMedia();
+        document.removeEventListener('click', autoplayOnce);
+    }
+}, {once:true});
+
+function showNotif(msg,ok){
+    Toastify({text:msg,duration:2500,gravity:'top',position:'center',style:{background:ok?'linear-gradient(135deg,#b8730a,#ffd700)':'linear-gradient(135deg,#8b0000,#e8445a)',color:ok?'#020b2e':'#fff',borderRadius:'8px',fontFamily:'Tajawal',fontSize:'13px'}}).showToast();
+}
+
+// Upload disabled — fixed playlist only
+
+function renderPlaylist(){ /* playlist masquée — radio publique */ }
+
+function loadTrack(idx){
+    if(idx<0||idx>=playlist.length)return;
+    currentIdx=idx;
+    var t=playlist[idx];
+    audio.pause();video.pause();
+    video.style.display='none';
+    document.getElementById('progress-fill').style.width='0%';
+    document.getElementById('time-cur').textContent='0:00';
+    document.getElementById('time-tot').textContent='0:00';
+    if(t.isVideo){
+        video.src=t.url;video.style.display='block';video.load();
+    } else {
+        // Utiliser l'audio pré-chargé si disponible pour enchaînement instantané
+        if(audioNext._preloadedIdx === idx && audioNext.src && audioNext.readyState >= 2){
+            // Swap : l'audio pré-chargé devient le principal
+            var tmpSrc = audioNext.src;
+            audio.src = tmpSrc;
+            // Pas de load() — l'audio est déjà en mémoire
+        } else {
+            audio.src=t.url;
+            audio.load();
+        }
+    }
+    // Pré-charger la suivante dès maintenant
+    preloadNext(idx);
+    updateMediaSession(t);
+    // Mettre à jour le titre affiché
+    var titleEl = document.getElementById('player-title');
+    if(titleEl) titleEl.textContent = t.name || '🔴 على الهواء مباشرة';
+}
+
+// ── PRÉ-CHARGEMENT : audio secondaire pour enchaînement instantané ──
+var audioNext = new Audio();
+audioNext.preload = 'auto';
+audioNext.volume = 0.8;
+
+function preloadNext(idx){
+    if(!playlist.length) return;
+    var next;
+    if(shuffle){
+        next = Math.floor(Math.random() * playlist.length);
+    } else {
+        next = (idx + 1) % playlist.length;
+    }
+    var t = playlist[next];
+    if(t && !t.isVideo){
+        audioNext.src = t.url;
+        audioNext.load();
+        audioNext._preloadedIdx = next;
+    }
+}
+
+function getMedia(){return currentIdx>=0&&playlist[currentIdx]&&playlist[currentIdx].isVideo?video:audio;}
+
+function playMedia(){
+    var m=getMedia();
+    var p=m.play();
+    if(p&&p.then){
+        p.then(function(){
+            failCount=0;
+            isPlaying=true;
+            document.getElementById('btn-play').textContent='⏸';
+            document.getElementById('equalizer').classList.add('playing');
+            var w=document.getElementById('radio-waves');if(w)w.classList.add('on');
+            if('mediaSession' in navigator)navigator.mediaSession.playbackState='playing';
+        }).catch(function(){
+            // play() refusé par le navigateur (autoplay mobile bloqué après 1-2 pistes).
+            // On NE relance PAS en boucle (ça resterait bloqué) : on remet ▶ pour relancer d'un tap,
+            // et les contrôles OS (écran verrouillé) restent dispo.
+            isPlaying=false;
+            document.getElementById('btn-play').textContent='▶';
+            document.getElementById('equalizer').classList.remove('playing');
+            var w=document.getElementById('radio-waves');if(w)w.classList.remove('on');
+            if('mediaSession' in navigator)navigator.mediaSession.playbackState='paused';
+        });
+    }
+}
+
+function togglePlay(){
+    if(currentIdx===-1){if(playlist.length)loadTrack(0);else return;}
+    var m=getMedia();
+    if(isPlaying){
+        m.pause();isPlaying=false;
+        document.getElementById('btn-play').textContent='▶';
+        document.getElementById('equalizer').classList.remove('playing');
+        var w=document.getElementById('radio-waves');if(w)w.classList.remove('on');
+    }
+    else playMedia();
+}
+
+function nextTrack(){
+    if(!playlist.length)return;
+    var idx;
+    // Si on a un audio pré-chargé prêt, l'utiliser directement
+    if(!shuffle && audioNext._preloadedIdx !== undefined){
+        idx = audioNext._preloadedIdx;
+    } else if(shuffle){
+        idx=Math.floor(Math.random()*playlist.length);
+    } else {
+        idx=currentIdx+1;
+        if(idx>=playlist.length) idx=0;
+    }
+    loadTrack(idx);
+    playMedia();
+}
+
+function playJingleThen(cb){
+    var done=false,started=false;
+    function go(){if(done)return;done=true;if(cb)cb();}
+    if(!window.speechSynthesis){go();return;}
+    try{window.speechSynthesis.cancel();}catch(e){}
+    var u=new SpeechSynthesisUtterance('LORD Radio Station... twenty four, twenty four... إذاعتي');
+    u.lang='ar-SA'; u.rate=0.78; u.pitch=1.1; u.volume=1;
+    var voices=window.speechSynthesis.getVoices();
+    var v=voices.find(function(x){return x.lang==='ar-SA';})
+         ||voices.find(function(x){return x.lang.startsWith('ar');});
+    if(v)u.voice=v;
+    u.onstart=function(){started=true;};
+    u.onend=go;
+    u.onerror=go;
+    window.speechSynthesis.speak(u);
+    // Si le jingle ne démarre pas (bug speechSynthesis bloqué) → on enchaîne vite
+    setTimeout(function(){if(!started)go();},1200);
+    // Filet de sécurité absolu : la musique continue quoi qu'il arrive
+    setTimeout(go,8000);
+}
+
+function prevTrack(){
+    if(!playlist.length)return;
+    loadTrack((currentIdx-1+playlist.length)%playlist.length);
+    playMedia();
+}
+
+function toggleShuffle(){
+    shuffle=!shuffle;
+    document.getElementById('btn-shuffle').classList.toggle('active',shuffle);
+}
+
+function toggleRepeat(){
+    repeat=!repeat;
+    document.getElementById('btn-repeat').classList.toggle('active',repeat);
+}
+
+function setVolume(v){
+    audio.volume=v/100;
+    video.volume=v/100;
+}
+
+function seekTo(e){
+    var bar=document.getElementById('progress-bar');
+    var ratio=(e.clientX-bar.getBoundingClientRect().left)/bar.offsetWidth;
+    var m=getMedia();
+    if(m.duration)m.currentTime=Math.max(0,Math.min(1,ratio))*m.duration;
+}
+
+function formatTime(s){
+    if(!s||isNaN(s))return'0:00';
+    return Math.floor(s/60)+':'+(Math.floor(s%60)<10?'0':'')+Math.floor(s%60);
+}
+
+function updateProgress(){
+    var m=getMedia();
+    if(!m.duration)return;
+    document.getElementById('progress-fill').style.width=(m.currentTime/m.duration*100)+'%';
+    document.getElementById('time-cur').textContent=formatTime(m.currentTime);
+    document.getElementById('time-tot').textContent=formatTime(m.duration);
+    if(playlist[currentIdx])playlist[currentIdx].duration=formatTime(m.duration);
+}
+
+var failCount=0;
+[audio,video].forEach(function(m){
+    m.addEventListener('timeupdate',updateProgress);
+    m.addEventListener('ended',function(){
+        // Toujours continuer — boucle playlist entière
+        failCount=0;
+        nextTrack();
+    });
+    m.addEventListener('error',function(){
+        // Piste injoignable (mp3 manquant / réseau) → on saute à la suivante
+        failCount++;
+        if(failCount<=playlist.length) nextTrack();
+    });
+    m.addEventListener('loadedmetadata',function(){
+        failCount=0;
+        document.getElementById('time-tot').textContent=formatTime(m.duration);
+        // Mise à jour du titre quand la piste est confirmée chargée
+        if(playlist[currentIdx]){
+            var titleEl = document.getElementById('player-title');
+            if(titleEl) titleEl.textContent = playlist[currentIdx].name || '🔴 على الهواء مباشرة';
+        }
+    });
+    // Précharger la suivante dès que la piste courante a assez chargé
+    m.addEventListener('canplaythrough', function(){
+        if(m === audio) preloadNext(currentIdx);
+    });
+});
+
+audio.volume=0.8;video.volume=0.8;
+setInterval(updateProgress,500);
+
+// ── MEDIA SESSION : contrôles OS / écran verrouillé + aide lecture continue mobile ──
+function updateMediaSession(t){
+    if(!('mediaSession' in navigator)||!t)return;
+    try{
+        navigator.mediaSession.metadata=new MediaMetadata({
+            title:t.name||'إذاعتي',
+            artist:'LORD RADIO STATION · 24/24',
+            album:'إذاعتي'
+        });
+    }catch(e){}
+}
+if('mediaSession' in navigator){
+    try{
+        navigator.mediaSession.setActionHandler('play',function(){playMedia();});
+        navigator.mediaSession.setActionHandler('pause',function(){
+            getMedia().pause();isPlaying=false;
+            document.getElementById('btn-play').textContent='▶';
+            document.getElementById('equalizer').classList.remove('playing');
+            var w=document.getElementById('radio-waves');if(w)w.classList.remove('on');
+            navigator.mediaSession.playbackState='paused';
+        });
+        navigator.mediaSession.setActionHandler('nexttrack',function(){nextTrack();});
+        navigator.mediaSession.setActionHandler('previoustrack',function(){prevTrack();});
+    }catch(e){}
+}
+
+// ── JINGLE RADIO LORD ──
+function playJingle(){
+    if(!window.speechSynthesis)return;
+    var u=new SpeechSynthesisUtterance('LORD Radio Station... twenty four, twenty four... إذاعتي... LORD SIDHOM I — The Conceptor');
+    u.lang='ar-SA'; u.rate=0.78; u.pitch=1.1; u.volume=1;
+    var voices=window.speechSynthesis.getVoices();
+    var v=voices.find(function(x){return x.lang==='ar-SA';})
+         ||voices.find(function(x){return x.lang.startsWith('ar');});
+    if(v)u.voice=v;
+    window.speechSynthesis.speak(u);
+}
+
+// Jingle à l'ouverture
+document.addEventListener('click',function jingleOnce(){
+    playJingle();
+    document.removeEventListener('click',jingleOnce);
+},{once:true});
+
+// Boucle automatique — repeat activé par défaut
+repeat=true;
+document.getElementById('btn-repeat').classList.add('active');
+</script>
+</body>
+</html>
